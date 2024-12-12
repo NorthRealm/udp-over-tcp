@@ -92,3 +92,17 @@ jobs:
 
       - name: Test
         run: cargo test-all-features
+
+      - name: Build static bins
+        run: |
+          chmod +x ./build-static-bins.sh
+          bash ./build-static-bins.sh
+        shell: bash
+    
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: UDP-OVER-TCP-${{ github.run_id }}
+          path: target/x86_64-unknown-linux-gnu/release/*
+          retention-days: 3
+          overwrite: true
